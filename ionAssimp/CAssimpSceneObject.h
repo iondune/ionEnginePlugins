@@ -49,6 +49,7 @@ namespace ion
 
 			struct SMaterial
 			{
+				vector<CImage *> Images;
 				vector<SharedPtr<Graphics::ITexture2D>> Textures;
 
 				SharedPtr<Graphics::CUniformValue<color3f>> Ambient = std::make_shared<Graphics::CUniformValue<color3f>>(0.05f);

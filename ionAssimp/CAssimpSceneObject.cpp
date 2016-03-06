@@ -39,6 +39,11 @@ namespace ion
 					PipelineState->OfferUniform("uMaterial.DiffuseColor", Buffer->Material->Diffuse);
 					PipelineState->OfferUniform("uMaterial.SpecularColor", Buffer->Material->Specular);
 					PipelineState->OfferUniform("uMaterial.Shininess", Buffer->Material->Shininess);
+
+					for (uint i = 0; i < Buffer->Material->Textures.size(); ++ i)
+					{
+						PipelineState->SetTexture(String::Build("uMaterial.DiffuseTexture%d", i), Buffer->Material->Textures[i]);
+					}
 				}
 
 				RenderPass->PreparePipelineStateForRendering(PipelineState, SceneObject);
@@ -64,6 +69,39 @@ namespace ion
 
 		void CAssimpSceneObject::Load(CRenderPass * RenderPass)
 		{
+			for (auto & Material : Scene->Materials)
+			{
+				Material->Textures.clear();
+
+				for (auto & Image : Material->Images)
+				{
+					Graphics::ITexture::EFormatComponents Format = Graphics::ITexture::EFormatComponents::R;
+					switch (Image->GetChannels())
+					{
+					case 2:
+						Format = Graphics::ITexture::EFormatComponents::RG;
+						break;
+					case 3:
+						Format = Graphics::ITexture::EFormatComponents::RGB;
+						break;
+					case 4:
+						Format = Graphics::ITexture::EFormatComponents::RGBA;
+						break;
+					}
+					SharedPtr<Graphics::ITexture2D> Texture = RenderPass->GetGraphicsAPI()->CreateTexture2D(
+						Image->GetSize(),
+						Graphics::ITexture::EMipMaps::True,
+						Format,
+						Graphics::ITexture::EInternalFormatType::Fix8);
+					Texture->Upload(
+						Image->GetData(),
+						Image->GetSize(),
+						Format,
+						Graphics::EScalarType::UnsignedInt8);
+					Material->Textures.push_back(Texture);
+				}
+			}
+
 			for (auto & Buffer : Scene->Buffers)
 			{
 				if (! Buffer->IndexBuffer)
@@ -178,6 +216,23 @@ namespace ion
 			*Result->Ambient = color4f(Color.r, Color.g, Color.b, Color.a);
 			Material->Get(AI_MATKEY_COLOR_SPECULAR, Color);
 			*Result->Specular = color4f(Color.r, Color.g, Color.b, Color.a);
+
+			if (Material->GetTextureCount(aiTextureType_DIFFUSE))
+			{
+				aiString Path;
+				Material->GetTexture(aiTextureType_DIFFUSE, 0, &Path);
+
+				CImage * Image = CImage::Load(string("Assets/Meshes/") + Path.C_Str());
+				if (Image)
+				{
+					Result->Images.push_back(Image);
+					Log::Info("Texture loaded for assimp material: %s", Path.C_Str());
+				}
+				else
+				{
+					Log::Error("Texture failure: %s", Path.C_Str());
+				}
+			}
 
 			return Result;
 		}
