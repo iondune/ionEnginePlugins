@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{19E8B0CB-8678-4A6D-B676-A95A234ABD2C}</ProjectGuid>
+    <RootNamespace>ionAssimp</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(VisualStudioDir)\Projects\ionEngine\Properties\Library.props" />
+  </ImportGroup>
+  <PropertyGroup>
+    <IncludePath>$(VisualStudioDir)\SDKs\assimp-3.1.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VisualStudioDir)\SDKs\assimp-3.1.1\lib64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClInclude Include="CAssimpSceneObject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CAssimpSceneObject.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+</Project>
