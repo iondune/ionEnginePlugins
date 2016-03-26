@@ -207,6 +207,18 @@ namespace ion
 			}
 		}
 
+		void CAssimpSceneObject::SetDrawFeatureEnabled(Graphics::EDrawFeature const Feature, bool const Enabled)
+		{
+			for (auto & PipelineState : PipelineStates)
+			{
+				RenderPass->SubmitPipelineStateForRendering(PipelineState, SceneObject);
+			}
+		}
+
+		void CAssimpSceneObject::SetRenderCategory(int const Category)
+		{
+		}
+
 		CAssimpSceneObject::SMaterial * ReadMaterial(aiMaterial * Material)
 		{
 			CAssimpSceneObject::SMaterial * Result = new CAssimpSceneObject::SMaterial();

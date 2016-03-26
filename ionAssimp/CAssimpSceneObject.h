@@ -21,6 +21,9 @@ namespace ion
 
 			virtual void ReadFromFile(string const & FileName);
 
+			virtual void SetDrawFeatureEnabled(Graphics::EDrawFeature const Feature, bool const Enabled);
+			virtual void SetRenderCategory(int const Category);
+
 
 			struct SVertex
 			{
