@@ -117,7 +117,8 @@ namespace ion
 						}
 					});
 
-					Buffer->IndexBuffer = RenderPass->GetGraphicsAPI()->CreateIndexBuffer(IndexData.data(), IndexData.size(), Graphics::EValueType::UnsignedInt32);
+					Buffer->IndexBuffer = RenderPass->GetGraphicsAPI()->CreateIndexBuffer();
+					Buffer->IndexBuffer->UploadData(IndexData);
 				}
 
 				if (! Buffer->VertexBuffer)
@@ -141,7 +142,8 @@ namespace ion
 						}
 					});
 
-					Buffer->VertexBuffer = RenderPass->GetGraphicsAPI()->CreateVertexBuffer(VertexData.data(), VertexData.size());
+					Buffer->VertexBuffer = RenderPass->GetGraphicsAPI()->CreateVertexBuffer();
+					Buffer->VertexBuffer->UploadData(VertexData);
 					Graphics::SInputLayoutElement InputLayout[] =
 					{
 						{ "vPosition",  3, Graphics::EAttributeType::Float },
