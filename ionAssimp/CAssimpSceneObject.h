@@ -21,7 +21,6 @@ namespace ion
 
 			virtual void ReadFromFile(string const & FileName);
 
-			virtual void SetDrawFeatureEnabled(Graphics::EDrawFeature const Feature, bool const Enabled);
 			virtual void SetRenderCategory(int const Category);
 
 
@@ -53,12 +52,12 @@ namespace ion
 			struct SMaterial
 			{
 				vector<CImage *> Images;
-				vector<SharedPtr<Graphics::ITexture2D>> Textures;
+				vector<SharedPointer<Graphics::ITexture2D>> Textures;
 
-				SharedPtr<Graphics::CUniformValue<color3f>> Ambient = std::make_shared<Graphics::CUniformValue<color3f>>(0.05f);
-				SharedPtr<Graphics::CUniformValue<color3f>> Diffuse = std::make_shared<Graphics::CUniformValue<color3f>>(0.9f);
-				SharedPtr<Graphics::CUniformValue<color3f>> Specular = std::make_shared<Graphics::CUniformValue<color3f>>(1.f);
-				SharedPtr<Graphics::CUniformValue<float>> Shininess = std::make_shared<Graphics::CUniformValue<float>>(1000.f);
+				SharedPointer<Graphics::CUniformValue<color3f>> Ambient = std::make_shared<Graphics::CUniformValue<color3f>>(0.05f);
+				SharedPointer<Graphics::CUniformValue<color3f>> Diffuse = std::make_shared<Graphics::CUniformValue<color3f>>(0.9f);
+				SharedPointer<Graphics::CUniformValue<color3f>> Specular = std::make_shared<Graphics::CUniformValue<color3f>>(1.f);
+				SharedPointer<Graphics::CUniformValue<float>> Shininess = std::make_shared<Graphics::CUniformValue<float>>(1000.f);
 			};
 
 			struct SMeshBuffer
@@ -69,8 +68,8 @@ namespace ion
 
 				SMaterial * Material = nullptr;
 
-				SharedPtr<Graphics::IVertexBuffer> VertexBuffer;
-				SharedPtr<Graphics::IIndexBuffer> IndexBuffer;
+				SharedPointer<Graphics::IVertexBuffer> VertexBuffer;
+				SharedPointer<Graphics::IIndexBuffer> IndexBuffer;
 			};
 
 			struct SMeshNode : public ITreeNode<SMeshNode>
@@ -78,8 +77,8 @@ namespace ion
 				vector<SMeshBuffer *> Buffers;
 				glm::mat4 Transformation;
 
-				vector<SharedPtr<Graphics::IPipelineState>> PipelineStates;
-				SharedPtr<Graphics::CUniformValue<glm::mat4>> AbsoluteTransformation = std::make_shared<Graphics::CUniformValue<glm::mat4>>();
+				vector<SharedPointer<Graphics::IPipelineState>> PipelineStates;
+				SharedPointer<Graphics::CUniformValue<glm::mat4>> AbsoluteTransformation = std::make_shared<Graphics::CUniformValue<glm::mat4>>();
 
 				void CreatePSOs(CRenderPass * RenderPass, CAssimpSceneObject * SceneObject);
 				void DrawPSOs(CRenderPass * RenderPass, CAssimpSceneObject * SceneObject);
@@ -93,7 +92,7 @@ namespace ion
 				SMeshNode * Root;
 			};
 
-			SharedPtr<Graphics::IShaderProgram> Shader;
+			SharedPointer<Graphics::IShaderProgram> Shader;
 
 		protected:
 

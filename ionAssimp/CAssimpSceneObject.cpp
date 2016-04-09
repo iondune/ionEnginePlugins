@@ -25,7 +25,7 @@ namespace ion
 		{
 			for (auto & Buffer : Buffers)
 			{
-				SharedPtr<Graphics::IPipelineState> PipelineState = RenderPass->GetGraphicsContext()->CreatePipelineState();
+				SharedPointer<Graphics::IPipelineState> PipelineState = RenderPass->GetGraphicsContext()->CreatePipelineState();
 				PipelineState->SetProgram(SceneObject->Shader);
 
 				PipelineState->SetIndexBuffer(Buffer->IndexBuffer);
@@ -88,7 +88,7 @@ namespace ion
 						Format = Graphics::ITexture::EFormatComponents::RGBA;
 						break;
 					}
-					SharedPtr<Graphics::ITexture2D> Texture = RenderPass->GetGraphicsAPI()->CreateTexture2D(
+					SharedPointer<Graphics::ITexture2D> Texture = RenderPass->GetGraphicsAPI()->CreateTexture2D(
 						Image->GetSize(),
 						Graphics::ITexture::EMipMaps::True,
 						Format,
@@ -204,14 +204,6 @@ namespace ion
 
 				Scene->Root = TraverseMesh(ImportedScene, ImportedScene->mRootNode, Scene->Buffers);
 				Scene->Root->CalculateAbsoluteTransformation();
-			}
-		}
-
-		void CAssimpSceneObject::SetDrawFeatureEnabled(Graphics::EDrawFeature const Feature, bool const Enabled)
-		{
-			for (auto & PipelineState : PipelineStates)
-			{
-				RenderPass->SubmitPipelineStateForRendering(PipelineState, SceneObject);
 			}
 		}
 
